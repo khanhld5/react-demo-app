@@ -12,19 +12,21 @@ function Counter(props) {
     setCount(0);
   };
 
-  const btnStyle = `inline-block transition duration-300 px-6 py-3 rounded-md font-bold text-2xl shadow-lg hover:shadow-2xl bg-gradient-to-${
-    count < 10 ? "br" : count < 50 ? "bl" : "tr"
-  } from-${
-    count < 10 ? "yellow-200" : count < 50 ? "red-200" : "blue-200"
-  } to-${
-    count < 10 ? "green-200" : count < 50 ? "indigo-300" : "purple-300"
-  } focus:outline-none hover:opacity-80`;
+  const btnStyle = `inline-block transition duration-300 px-6 py-3 rounded-md font-bold text-2xl shadow-lg hover:shadow-2xl  focus:outline-none hover:opacity-80 ${
+    count < 10
+      ? "bg-gradient-to-br from-yellow-200 to-green-200"
+      : count < 50
+      ? "bg-gradient-to-bl from-red-200 to-indigo-300"
+      : "bg-gradient-to-tr from-blue-200 to-purple-300"
+  }`;
 
-  const counterStyle = `inline-block transition duration-300 cursor-pointer px-16 py-10 rounded-md text-white font-bold text-9xl shadow-xl hover:shadow-2xl bg-gradient-to-${
-    count < 10 ? "br" : count < 50 ? "bl" : "tr"
-  } from-${
-    count < 10 ? "blue-200" : count < 50 ? "red-200" : "yellow-200"
-  } to-${count < 10 ? "green-200" : count < 50 ? "indigo-300" : "purple-300"}`;
+  const counterStyle = `inline-block transition duration-300 cursor-pointer px-16 py-10 rounded-md text-white font-bold text-9xl shadow-xl hover:shadow-2xl ${
+    count < 10
+      ? "bg-gradient-to-br from-blue-200 to-green-200"
+      : count < 50
+      ? "bg-gradient-to-bl from-red-200 to-indigo-300"
+      : "bg-gradient-to-tr from-yellow-200 to-purple-300"
+  }`;
 
   return (
     <aside className="displayCounter w-1/2 m-auto text-center transition duration-300">
