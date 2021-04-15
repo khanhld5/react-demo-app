@@ -35,9 +35,11 @@ function InputField({ ...props }) {
         onMouseOver={handleMoveIn}
         onMouseLeave={handleMoveOut}
         className={`mr-auto px-5 py-4 flex align-middle focus:outline-none text-${
-          props.allDone === false && hoverCheckAll === false
-            ? "gray-100"
-            : "yellow-200"
+          props.allDone
+            ? "yellow-200"
+            : hoverCheckAll
+            ? "yellow-200"
+            : "gray-100"
         }`}
       >
         <FontAwesomeIcon icon={faCheck} className="text-xl"></FontAwesomeIcon>
