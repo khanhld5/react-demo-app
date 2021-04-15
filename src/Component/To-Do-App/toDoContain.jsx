@@ -11,17 +11,18 @@ class ToDoContain extends Component {
       inputTodo: "",
       editTodo: "",
       filter: "all",
+      allDone: false,
     };
   }
   handleInputChange = (e) => {
     const value = e.target.value;
-    if (value.length) this.setState({ inputTodo: value });
+    this.setState({ inputTodo: value });
   };
   handleEditChange = (e) => {
     const value = e.target.value;
-    if (value.length) this.setState({ editTodo: value });
+    this.setState({ editTodo: value });
   };
-  handleSubmit = (e) => {
+  handleTodoSubmit = (e) => {
     e.preventDefault();
     const state = this.state;
     const list = state.toDoList;
@@ -58,16 +59,19 @@ class ToDoContain extends Component {
   handleAllDone = () => {
     const state = this.state;
     const list = state.toDoList;
+    let allDone = this.state.allDone;
     if (list.some((item) => item.done === false)) {
       for (let i = 0; i < list.length; i++) {
         list[i].done = true;
       }
+      allDone = true;
     } else if (list.every((item) => item.done === true)) {
       for (let i = 0; i < list.length; i++) {
         list[i].done = false;
       }
+      allDone = false;
     }
-    this.setState({ toDoList: list });
+    this.setState({ toDoList: list, allDone });
   };
   handleChangeFilter = (filter) => {
     if (filter !== this.state.filter) this.setState({ filter: filter });
@@ -84,14 +88,15 @@ class ToDoContain extends Component {
     const filter = state.filter;
 
     return (
-      <div className="display_todo">
-        <h1>Todos</h1>
-        <section>
+      <div className="display_todo text-center">
+        <h1 className="text-7xl text-gray-500 select-none mb-5">Todos</h1>
+        <section className="w-2/5 m-auto bg-white rounded shadow-ct-1">
           <InputField
-            handleSubmit={this.handleSubmit}
+            handleTodoSubmit={this.handleTodoSubmit}
             handleInputChange={this.handleInputChange}
             handleAllDone={this.handleAllDone}
             value={state.inputTodo}
+            allDone={state.allDone}
           ></InputField>
           <ToDoList
             list={list}

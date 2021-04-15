@@ -1,5 +1,5 @@
 import React from "react";
-function FilterContain(props) {
+function FilterContain({ ...props }) {
   const taskCount = (list) => {
     let count = 0;
     if (list.length)
