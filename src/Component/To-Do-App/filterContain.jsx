@@ -10,21 +10,49 @@ function FilterContain({ ...props }) {
     return count;
   };
   return (
-    <div className="filter_contain">
-      <p>
-        <span>{taskCount(props.list)}</span>
+    <div id="filter_contain" className="flex p-2">
+      <p className="justify-left mr-2 select-none">
+        <span>{taskCount(props.list)} </span>
         <span>items left</span>
       </p>
-      <div className="filter">
-        <button onClick={() => props.handleChangeFilter("all")}>All</button>
-        <button onClick={() => props.handleChangeFilter("active")}>
+      <div className="filter flex flex-1 mx-2 justify-center">
+        <button
+          className={`mr-1 px-1 border border-${
+            props.filter === "all" ? "gray-400" : "transparent"
+          } hover:border-gray-200 rounded focus:outline-none `}
+          onClick={() => props.handleChangeFilter("all")}
+        >
+          All
+        </button>
+        <button
+          className={`mr-1 px-1 border border-${
+            props.filter === "active"
+              ? "gray-400"
+              : "transparent hover:border-gray-200"
+          } rounded focus:outline-none`}
+          onClick={() => props.handleChangeFilter("active")}
+        >
           Active
         </button>
-        <button onClick={() => props.handleChangeFilter("complete")}>
+        <button
+          className={`mr-1 px-1 border border-${
+            props.filter === "complete"
+              ? "gray-400"
+              : "transparent hover:border-gray-200"
+          } rounded focus:outline-none`}
+          onClick={() => props.handleChangeFilter("complete")}
+        >
           Compelte
         </button>
-        <button onClick={props.handleClearComplete}>Clear completed</button>
       </div>
+      <button
+        className={`px-2 border border-transparent hover:border-gray-400 rounded opacity-${
+          props.list.some((item) => item.done === true) ? "100" : "0"
+        } `}
+        onClick={props.handleClearComplete}
+      >
+        Clear completed
+      </button>
     </div>
   );
 }
