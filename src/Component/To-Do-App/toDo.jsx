@@ -69,9 +69,7 @@ function Todo({ ...props }) {
           onClick={() => props.handleDone(index)}
         >
           <FontAwesomeIcon
-            className={`text-3xl ${
-              item.done ? "text-green-400" : "text-gray-200"
-            }`}
+            className={`text-3xl text-${item.done ? "green-400" : "gray-200"}`}
             icon={[`${item.done ? "fas" : "far"}`, "check-circle"]}
           ></FontAwesomeIcon>
         </button>
@@ -109,7 +107,7 @@ function Todo({ ...props }) {
                 : "80%"
             }`,
           }}
-          className="absolute right-0 h-full py-3 px-2 bg-white opacity-0 border-b border-gray-100 text-gray-400 text-2xl italic break-all transition duration-300 focus:outline-none  "
+          className="absolute right-0 h-full py-3 px-2 bg-white opacity-0 border-b border-gray-100 text-gray-400 text-2xl italic break-all transition duration-300 focus:outline-none"
           value={edit}
           onChange={handleEditChange}
           onFocus={handleEditFocus}
