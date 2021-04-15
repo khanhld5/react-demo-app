@@ -1,17 +1,20 @@
 import React from "react";
 
-function ToDoList(props) {
+function InputField(props) {
   return (
-    <form className="input-field">
-      <button>all checked</button>
+    <form className="input-field" onSubmit={props.handleSubmit}>
+      <button type="button" onClick={props.handleAllDone}>
+        all checked
+      </button>
       <input
         type="text"
         name="todo"
         id="todoInput"
         placeholder="What needs to be done?"
+        onChange={props.handleInputChange}
+        value={props.value}
       />
-      <button type="submit" hidden onSubmit={props.handleSubmit}></button>
     </form>
   );
 }
-export default ToDoList;
+export default InputField;
