@@ -69,7 +69,9 @@ function Todo({ ...props }) {
           onClick={() => props.handleDone(index)}
         >
           <FontAwesomeIcon
-            className={`text-3xl text-${item.done ? "green-400" : "gray-200"}`}
+            className={`text-3xl ${
+              item.done ? "text-green-400" : "text-gray-200"
+            }`}
             icon={[`${item.done ? "fas" : "far"}`, "check-circle"]}
           ></FontAwesomeIcon>
         </button>
