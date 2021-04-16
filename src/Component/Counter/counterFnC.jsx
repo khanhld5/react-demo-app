@@ -1,6 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as action from "../../state/actions/counterActions";
+import {
+  handleFnIncrease,
+  handleFnDecrease,
+  handleFnReset,
+} from "../../state/actions/counterActions";
 
 function Counter(props) {
   const count = useSelector((state) => state.fncCounter);
@@ -28,20 +32,20 @@ function Counter(props) {
       <h3 className="mb-16">
         <span
           className={counterStyle}
-          onClick={() => dispatch(action.fnReset())}
+          onClick={() => dispatch(handleFnReset())}
         >
           {count}
         </span>
       </h3>
       <div className="btn-Contain flex text-white justify-center">
         <button
-          onClick={() => dispatch(action.fnDecrease())}
+          onClick={() => dispatch(handleFnDecrease())}
           className={btnStyle}
         >
           -
         </button>
         <button
-          onClick={() => dispatch(action.fnIncrease())}
+          onClick={() => dispatch(handleFnIncrease())}
           className={btnStyle + " ml-16"}
         >
           +

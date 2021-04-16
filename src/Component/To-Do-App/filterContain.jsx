@@ -1,6 +1,12 @@
 import React from "react";
 import { ALL, ACTIVE, COMPLETE } from "../../Constant/filter";
+import { useSelector, useDispatch } from "react-redux";
+import { handleRemoveComplete } from "../../state/actions/todoListActions";
+
 function FilterContain({ ...props }) {
+  const list = useSelector((state) => state.todoList.list) || [];
+  const dispatch = useDispatch();
+
   const taskCount = (list) => {
     let count = 0;
     if (list.length)
@@ -10,10 +16,18 @@ function FilterContain({ ...props }) {
       );
     return count;
   };
+
+  //handle remove complete
+  const handleClearComplete = () => {
+    const newList = list.filter((item) => item.done === false);
+    dispatch(handleRemoveComplete(newList));
+    props.storeTodoList(newList, false);
+  };
+
   return (
     <div id="filter_contain" className="flex p-2">
       <p className="justify-left mr-2 select-none">
-        <span>{taskCount(props.list)} </span>
+        <span>{taskCount(list)} </span>
         <span>items left</span>
       </p>
       <div className="filter flex flex-1 mx-2 justify-center">
@@ -48,9 +62,9 @@ function FilterContain({ ...props }) {
       </div>
       <button
         className={`px-2 border border-transparent hover:border-gray-400 rounded opacity-${
-          props.list.some((item) => item.done === true) ? "100" : "0"
+          list.some((item) => item.done === true) ? "100" : "0"
         } `}
-        onClick={props.handleClearComplete}
+        onClick={handleClearComplete}
       >
         Clear completed
       </button>

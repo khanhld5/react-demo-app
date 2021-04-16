@@ -1,9 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Todo from "./toDo";
 import { ALL, ACTIVE, COMPLETE } from "../../Constant/filter";
 
 function ToDoList({ ...props }) {
-  const list = props.list;
+  const list = useSelector((state) => state.todoList.list) || [];
 
   const filter = (filter, list) => {
     let filterList = [];
@@ -32,10 +33,8 @@ function ToDoList({ ...props }) {
                 key={item.id}
                 item={item}
                 index={index}
-                handleEditSubmit={props.handleEditSubmit}
-                handleDone={props.handleDone}
-                handleRemove={props.handleRemove}
-              ></Todo>
+                storeTodoList={props.storeTodoList}
+              />
             );
           })
         : ""}

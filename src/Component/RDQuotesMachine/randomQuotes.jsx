@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Quote from "./quote";
 import { connect } from "react-redux";
 import { updateQuotes } from "../../state/actions/rdQuotesAction";
 
-class RandomQuotes extends Component {
+class RandomQuotes extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

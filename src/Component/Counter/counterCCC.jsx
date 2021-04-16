@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as action from "../../state/actions/counterActions";
+import {
+  handleCCIncrease,
+  handleCCDecrease,
+  handleCCReset,
+} from "../../state/actions/counterActions";
 
 class CounterCCC extends Component {
   render() {
@@ -26,20 +30,20 @@ class CounterCCC extends Component {
         <h3 className="mb-16">
           <span
             className={counterStyle}
-            onClick={() => this.props.handleReset()}
+            onClick={() => this.props.handleCCReset()}
           >
             {count}
           </span>
         </h3>
         <div className="btn-Contain flex text-white justify-center">
           <button
-            onClick={() => this.props.handleDecrease()}
+            onClick={() => this.props.handleCCDecrease()}
             className={btnStyle}
           >
             -
           </button>
           <button
-            onClick={() => this.props.handleIncrease()}
+            onClick={() => this.props.handleCCIncrease()}
             className={btnStyle + " ml-16"}
           >
             +
@@ -49,14 +53,14 @@ class CounterCCC extends Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleIncrease: () => dispatch(action.ccIncrease(5)),
-    handleDecrease: () => dispatch(action.ccDecrease()),
-    handleReset: () => dispatch(action.ccReset()),
-  };
-};
-const mapStateToProps = (state) => ({
-  count: state.cccCounter,
-});
-export default connect(mapStateToProps, mapDispatchToProps)(CounterCCC);
+
+export default connect(
+  (state) => ({
+    count: state.cccCounter,
+  }),
+  {
+    handleCCIncrease,
+    handleCCDecrease,
+    handleCCReset,
+  }
+)(CounterCCC);

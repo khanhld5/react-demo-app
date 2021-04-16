@@ -1,21 +1,21 @@
 import * as act from "../../Constant/counter";
 //ccc counter
-export const ccIncrease = () => ({
-    type: act.CC_INCREASE
-})
-export const ccDecrease = () => ({
-    type: act.CC_DECREASE
-})
-export const ccReset = () => ({
-    type: act.CC_RESET
-})
+export const handleCCIncrease = () => ({
+  type: act.CC_INCREASE,
+});
+export const handleCCDecrease = () => ({
+  type: act.CC_DECREASE,
+});
+export const handleCCReset = () => ({
+  type: act.CC_RESET,
+});
 //fnc counter
-export const fnIncrease = () => ({
-    type: act.FN_INCREASE
-})
-export const fnDecrease = () => ({
-    type: act.FN_DECREASE
-})
-export const fnReset = () => ({
-    type: act.FN_RESET
-})
+export const handleFnIncrease = () => ({
+  type: act.FN_INCREASE,
+});
+export const handleFnDecrease = () => ({
+  type: act.FN_DECREASE,
+});
+export const handleFnReset = () => ({
+  type: act.FN_RESET,
+});

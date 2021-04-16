@@ -1,18 +1,63 @@
 import React, { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle as faCheckCircleRegular } from "@fortawesome/free-regular-svg-icons";
 
+import { handleUpdateList } from "../../state/actions/todoListActions";
+
 library.add(faCheckCircle, faCheckCircleRegular, faTrashAlt);
+
 function Todo({ ...props }) {
   const item = props.item;
   const index = props.index;
+  const list = useSelector((state) => state.todoList.list);
+  const allDone = useSelector((state) => state.todoList.allDone);
+  const dispatch = useDispatch();
+
   const [hoverOnRoot, setHoverOnRoot] = useState(false);
   const [edit, setEdit] = useState(item.title);
 
   const editInput = useRef();
   const check = useRef();
+
+  //check AllDone
+  const checkAllDone = (list) => {
+    let allDone = false;
+    if (list.every((item) => item.done === true)) allDone = true;
+    return allDone;
+  };
+
+  //submit edit
+  const handleEditSubmit = (e) => {
+    const input = editInput.current;
+    e.preventDefault();
+
+    props.handleEditSubmit(edit, index);
+    if (edit.length) {
+      list[index].title = edit;
+      dispatch(handleUpdateList(list, allDone));
+      props.storeTodoList(list, allDone);
+    } else handleRemove(index);
+
+    input.blur();
+  };
+
+  const handleDone = (index) => {
+    list[index].done = !list[index].done;
+    const allDone = checkAllDone(list);
+    dispatch(handleUpdateList(list, allDone));
+    props.storeTodoList(list, allDone);
+  };
+
+  const handleRemove = (index) => {
+    list.splice(index, 1);
+    const allDone = checkAllDone(list);
+    dispatch(handleUpdateList(list, allDone));
+    props.storeTodoList(list, allDone);
+  };
 
   //Hover on this component
   const handleMoveInRoot = () => {
@@ -38,21 +83,12 @@ function Todo({ ...props }) {
   const handleFocusEdit = () => {
     const input = editInput.current;
     input.focus();
-    //input.classList;
   };
 
   //listen to edit state change
   const handleEditChange = (e) => {
     const value = e.target.value;
     setEdit(value);
-  };
-
-  //submit edit
-  const handleEditSubmit = (e) => {
-    const input = editInput.current;
-    e.preventDefault();
-    props.handleEditSubmit(edit, index);
-    input.blur();
   };
 
   return (
@@ -66,7 +102,7 @@ function Todo({ ...props }) {
           ref={check}
           type="button"
           className="justtify-left px-4 transition duration-300 focus:outline-none"
-          onClick={() => props.handleDone(index)}
+          onClick={() => handleDone(index)}
         >
           <FontAwesomeIcon
             className={`text-3xl ${
@@ -89,7 +125,7 @@ function Todo({ ...props }) {
             hoverOnRoot ? "40" : "0"
           } `}
           onClick={(e) => {
-            props.handleRemove(index);
+            handleRemove(index);
           }}
         >
           <FontAwesomeIcon
