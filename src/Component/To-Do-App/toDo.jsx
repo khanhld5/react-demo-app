@@ -65,7 +65,7 @@ function Todo({ ...props }) {
         <button
           ref={check}
           type="button"
-          className="justtify-left px-2 transition duration-300 focus:outline-none"
+          className="justtify-left px-4 transition duration-300 focus:outline-none"
           onClick={() => props.handleDone(index)}
         >
           <FontAwesomeIcon

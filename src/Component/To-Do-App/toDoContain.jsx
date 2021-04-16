@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import ToDoList from "./toDoList";
 import FilterContain from "./filterContain";
 import InputField from "./inputField";
+import { ALL } from "../../Constant/filter";
 
 class ToDoContain extends Component {
   constructor(props) {
     super(props);
     this.state = {
       toDoList: [],
-      filter: "all",
+      filter: ALL,
       allDone: false,
     };
   }
@@ -16,29 +17,34 @@ class ToDoContain extends Component {
   //get data
   getToDoList = () => {
     const list = JSON.parse(localStorage.getItem("list")) || [];
-    this.setState({ toDoList: list });
+    const allDone = JSON.parse(localStorage.getItem("allDone")) || false;
+    this.setState({ toDoList: list, allDone });
   };
 
   //set data
-  setTodoList = (list) => {
+  setTodoList = (list, allDone) => {
     const listStorage = JSON.parse(localStorage.getItem("list"));
-    if (listStorage && list.length < listStorage.length)
+    if (listStorage && list.length < listStorage.length) {
       localStorage.removeItem("list");
+      localStorage.removeItem("allDone");
+    }
     localStorage.setItem("list", JSON.stringify(list));
+    localStorage.setItem("allDone", JSON.stringify(allDone));
   };
 
   //handle submit
   handleTodoSubmit = (value) => {
-    const state = this.state;
-    const list = state.toDoList;
+    const list = this.state.toDoList;
     if (value.length) {
       let id = 0;
       if (list.length) id = list[list.length - 1].id + 1;
       list.push({ id: id, done: false, title: value });
+      const allDone = false;
       this.setState({
         toDoList: list,
+        allDone,
       });
-      this.setTodoList(list);
+      this.setTodoList(list, allDone);
     }
   };
   handleEditSubmit = (value, index) => {
@@ -46,33 +52,39 @@ class ToDoContain extends Component {
     if (value.length) {
       list[index].title = value;
       this.setState({ toDoList: list });
-      this.setTodoList(list);
+      this.setTodoList(list, this.state.allDone);
     } else this.handleRemove(index);
   };
-
+  //check AllDone
+  checkAllDone = (list) => {
+    let allDone = false;
+    if (list.every((item) => item.done === true)) allDone = true;
+    return allDone;
+  };
   //handle done
   handleDone = (index) => {
     const list = this.state.toDoList;
     list[index].done = !list[index].done;
-    this.setState({ toDoList: list });
-    this.setTodoList(list);
+    const allDone = this.checkAllDone(list);
+    this.setState({ toDoList: list, allDone });
+    this.setTodoList(list, allDone);
   };
   handleAllDone = () => {
     const list = this.state.toDoList;
-    let allDone = this.state.allDone;
-    if (list.some((item) => item.done === false)) {
-      for (let i = 0; i < list.length; i++) {
-        list[i].done = true;
-      }
-      allDone = true;
-    } else if (list.every((item) => item.done === true)) {
+    let allDone = this.checkAllDone(list);
+    if (allDone) {
       for (let i = 0; i < list.length; i++) {
         list[i].done = false;
       }
       allDone = false;
+    } else {
+      for (let i = 0; i < list.length; i++) {
+        list[i].done = true;
+      }
+      allDone = true;
     }
     this.setState({ toDoList: list, allDone });
-    this.setTodoList(list);
+    this.setTodoList(list, allDone);
   };
 
   //handle remove
@@ -80,15 +92,16 @@ class ToDoContain extends Component {
     const state = this.state;
     const list = state.toDoList;
     list.splice(index, 1);
-    this.setState({ toDoList: list });
-    this.setTodoList(list);
+    const allDone = this.checkAllDone(list);
+    this.setState({ toDoList: list, allDone });
+    this.setTodoList(list, allDone);
   };
   handleClearComplete = () => {
     const state = this.state;
     const list = state.toDoList;
     const newList = list.filter((item) => item.done === false);
     this.setState({ toDoList: newList, allDone: false });
-    this.setTodoList(newList);
+    this.setTodoList(newList, false);
   };
 
   // handle Filter

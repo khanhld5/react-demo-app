@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import * as action from "../../state/actions/counterActions";
 
 function Counter(props) {
-  const [count, setCount] = useState(0);
-  const handleIncrease = () => {
-    setCount(count + 1);
-  };
-  const handleDecrease = () => {
-    count <= 0 ? setCount(0) : setCount(count - 1);
-  };
-  const handleReset = () => {
-    setCount(0);
-  };
+  const count = useSelector((state) => state.fncCounter);
+  const dispatch = useDispatch();
 
   const btnStyle = `inline-block transition duration-300 px-6 py-3 rounded-md font-bold text-2xl shadow-lg hover:shadow-2xl  focus:outline-none hover:opacity-80 ${
     count < 10
@@ -32,15 +26,24 @@ function Counter(props) {
     <aside className="displayCounter w-1/2 m-auto text-center transition duration-300">
       {props.children}
       <h3 className="mb-16">
-        <span className={counterStyle} onClick={handleReset}>
+        <span
+          className={counterStyle}
+          onClick={() => dispatch(action.fnReset())}
+        >
           {count}
         </span>
       </h3>
       <div className="btn-Contain flex text-white justify-center">
-        <button onClick={handleDecrease} className={btnStyle}>
+        <button
+          onClick={() => dispatch(action.fnDecrease())}
+          className={btnStyle}
+        >
           -
         </button>
-        <button onClick={handleIncrease} className={btnStyle + " ml-16"}>
+        <button
+          onClick={() => dispatch(action.fnIncrease())}
+          className={btnStyle + " ml-16"}
+        >
           +
         </button>
       </div>

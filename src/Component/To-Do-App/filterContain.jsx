@@ -1,4 +1,5 @@
 import React from "react";
+import { ALL, ACTIVE, COMPLETE } from "../../Constant/filter";
 function FilterContain({ ...props }) {
   const taskCount = (list) => {
     let count = 0;
@@ -18,29 +19,29 @@ function FilterContain({ ...props }) {
       <div className="filter flex flex-1 mx-2 justify-center">
         <button
           className={`mr-1 px-1 border border-${
-            props.filter === "all" ? "gray-400" : "transparent"
+            props.filter === ALL ? "gray-400" : "transparent"
           } hover:border-gray-200 rounded focus:outline-none `}
-          onClick={() => props.handleChangeFilter("all")}
+          onClick={() => props.handleChangeFilter(ALL)}
         >
           All
         </button>
         <button
           className={`mr-1 px-1 border border-${
-            props.filter === "active"
+            props.filter === ACTIVE
               ? "gray-400"
               : "transparent hover:border-gray-200"
           } rounded focus:outline-none`}
-          onClick={() => props.handleChangeFilter("active")}
+          onClick={() => props.handleChangeFilter(ACTIVE)}
         >
           Active
         </button>
         <button
           className={`mr-1 px-1 border border-${
-            props.filter === "complete"
+            props.filter === COMPLETE
               ? "gray-400"
               : "transparent hover:border-gray-200"
           } rounded focus:outline-none`}
-          onClick={() => props.handleChangeFilter("complete")}
+          onClick={() => props.handleChangeFilter(COMPLETE)}
         >
           Compelte
         </button>

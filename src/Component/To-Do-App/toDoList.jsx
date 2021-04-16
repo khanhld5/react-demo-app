@@ -1,5 +1,6 @@
 import React from "react";
 import Todo from "./toDo";
+import { ALL, ACTIVE, COMPLETE } from "../../Constant/filter";
 
 function ToDoList({ ...props }) {
   const list = props.list;
@@ -7,13 +8,13 @@ function ToDoList({ ...props }) {
   const filter = (filter, list) => {
     let filterList = [];
     switch (filter) {
-      case "all":
+      case ALL:
         filterList = [...list];
         break;
-      case "active":
+      case ACTIVE:
         filterList = list.filter((item) => item.done === false);
         break;
-      case "complete":
+      case COMPLETE:
         filterList = list.filter((item) => item.done === true);
         break;
       default:

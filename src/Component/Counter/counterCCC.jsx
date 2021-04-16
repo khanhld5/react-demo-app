@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-class CounterCCC extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0 };
-  }
-  handleIncrease = () => {
-    this.setState({ count: this.state.count + 1 });
-  };
-  handleDecrease = () => {
-    const count = this.state.count;
-    if (count !== 0) this.setState({ count: count - 1 });
-  };
-  handleReset = () => {
-    this.setState({ count: 0 });
-  };
-  render() {
-    const count = this.state.count;
+import { connect } from "react-redux";
+import * as action from "../../state/actions/counterActions";
 
+class CounterCCC extends Component {
+  render() {
+    const count = this.props.count;
     const btnStyle = `inline-block transition duration-300 px-6 py-3 rounded-md font-bold text-2xl shadow-lg hover:shadow-2xl  focus:outline-none hover:opacity-80 ${
       count < 10
         ? "bg-gradient-to-br from-yellow-200 to-green-200"
@@ -36,15 +24,24 @@ class CounterCCC extends Component {
       <aside className="displayCounter w-1/2 m-auto text-center transition duration-300">
         {this.props.children}
         <h3 className="mb-16">
-          <span className={counterStyle} onClick={this.handleReset}>
+          <span
+            className={counterStyle}
+            onClick={() => this.props.handleReset()}
+          >
             {count}
           </span>
         </h3>
         <div className="btn-Contain flex text-white justify-center">
-          <button onClick={this.handleDecrease} className={btnStyle}>
+          <button
+            onClick={() => this.props.handleDecrease()}
+            className={btnStyle}
+          >
             -
           </button>
-          <button onClick={this.handleIncrease} className={btnStyle + " ml-16"}>
+          <button
+            onClick={() => this.props.handleIncrease()}
+            className={btnStyle + " ml-16"}
+          >
             +
           </button>
         </div>
@@ -52,5 +49,14 @@ class CounterCCC extends Component {
     );
   }
 }
-
-export default CounterCCC;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleIncrease: () => dispatch(action.ccIncrease(5)),
+    handleDecrease: () => dispatch(action.ccDecrease()),
+    handleReset: () => dispatch(action.ccReset()),
+  };
+};
+const mapStateToProps = (state) => ({
+  count: state.cccCounter,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(CounterCCC);

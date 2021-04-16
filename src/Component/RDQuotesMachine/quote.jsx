@@ -4,6 +4,7 @@ import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Quote = (props) => {
   const color = props.color;
+  const quote = props.quote;
   return (
     <div
       style={color}
@@ -15,9 +16,9 @@ const Quote = (props) => {
         <span className="text-2xl font-medium">
           <FontAwesomeIcon icon={faQuoteLeft} size="1x" />
         </span>{" "}
-        <span className="ml-3 text-xl">{props.quote}</span>
+        <span className="ml-3 text-xl">{quote.quote}</span>
       </h1>
-      <h2 className="text-right">- {props.author}</h2>
+      <h2 className="text-right">- {quote.author}</h2>
     </div>
   );
 };
