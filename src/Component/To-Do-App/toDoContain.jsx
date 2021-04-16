@@ -15,25 +15,16 @@ class ToDoContain extends Component {
 
   //get data
   getToDoList = () => {
-    const list = [];
-    if (localStorage.length) {
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        let value = JSON.parse(localStorage.getItem(key));
-        list[i] = value;
-      }
-    }
-    list.sort((current, next) => current.id - next.id);
+    const list = JSON.parse(localStorage.getItem("list")) || [];
     this.setState({ toDoList: list });
   };
 
   //set data
   setTodoList = (list) => {
-    if (list.length < localStorage.length) localStorage.clear();
-    for (let item of list) {
-      const value = JSON.stringify(item);
-      localStorage.setItem(item.id, value);
-    }
+    const listStorage = JSON.parse(localStorage.getItem("list"));
+    if (listStorage && list.length < listStorage.length)
+      localStorage.removeItem("list");
+    localStorage.setItem("list", JSON.stringify(list));
   };
 
   //handle submit
