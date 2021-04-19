@@ -16,7 +16,6 @@ const todoListReducer = produce((draft, action) => {
       return (allDone = true);
     return allDone;
   };
-
   switch (action.type) {
     case act.ADD_TODO:
       {

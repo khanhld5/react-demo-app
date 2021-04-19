@@ -7,7 +7,7 @@ import {
 } from "../../state/actions/counterActions";
 
 function Counter(props) {
-  const count = useSelector((state) => state.fncCounter);
+  const count = useSelector((state) => state.fncCounter.count);
   const dispatch = useDispatch();
 
   const btnStyle = `inline-block transition duration-300 px-6 py-3 rounded-md font-bold text-2xl shadow-lg hover:shadow-2xl  focus:outline-none hover:opacity-80 ${
@@ -32,14 +32,18 @@ function Counter(props) {
       <h3 className="mb-16">
         <span
           className={counterStyle}
-          onClick={() => dispatch(handleFnReset())}
+          onClick={() => {
+            if (count) dispatch(handleFnReset());
+          }}
         >
           {count}
         </span>
       </h3>
       <div className="btn-Contain flex text-white justify-center">
         <button
-          onClick={() => dispatch(handleFnDecrease())}
+          onClick={() => {
+            if (count) dispatch(handleFnDecrease());
+          }}
           className={btnStyle}
         >
           -

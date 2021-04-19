@@ -30,14 +30,18 @@ class CounterCCC extends Component {
         <h3 className="mb-16">
           <span
             className={counterStyle}
-            onClick={() => this.props.handleCCReset()}
+            onClick={() => {
+              if (count) this.props.handleCCReset();
+            }}
           >
             {count}
           </span>
         </h3>
         <div className="btn-Contain flex text-white justify-center">
           <button
-            onClick={() => this.props.handleCCDecrease()}
+            onClick={() => {
+              if (count) this.props.handleCCDecrease();
+            }}
             className={btnStyle}
           >
             -
@@ -56,7 +60,7 @@ class CounterCCC extends Component {
 
 export default connect(
   (state) => ({
-    count: state.cccCounter,
+    count: state.cccCounter.count,
   }),
   {
     handleCCIncrease,
