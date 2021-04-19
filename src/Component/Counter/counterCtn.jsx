@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import CounterFnC from "./counterFnC";
 import CounterCCC from "./counterCCC";
 
 const CounterContain = (props) => {
   return (
-    <>
+    <div className="container m-auto">
       <h1 className="font-bold text-4xl text-center mb-10 text-gray-700">
         Counter app
       </h1>
@@ -21,7 +21,7 @@ const CounterContain = (props) => {
           </h2>
         </CounterCCC>
       </div>
-    </>
+    </div>
   );
 };
 

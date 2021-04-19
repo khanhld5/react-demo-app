@@ -18,6 +18,7 @@ function InputField({ ...props }) {
   let allDone = useSelector((state) => state.todoList.allDone);
   const dispatch = useDispatch();
 
+  // persit redux
   // useEffect(() => {
   //   const storeAllDone = () => {
   //     localStorage.setItem("allDone", JSON.stringify(allDone));
@@ -25,6 +26,7 @@ function InputField({ ...props }) {
   //   storeAllDone();
   // }, [allDone]);
 
+  //working with local state
   const handleInputTodoChange = (e) => {
     const value = e.target.value;
     setInputTodo(value);
@@ -37,6 +39,7 @@ function InputField({ ...props }) {
     setHoverCheckAll(false);
   };
 
+  //working with global store state
   //handle submit
   const handleTodoSubmit = (value) => {
     if (value.length) {

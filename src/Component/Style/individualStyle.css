@@ -1,4 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+
 #todoInput::placeholder {
   font-style: italic;
   color: rgba(209, 213, 219, 1);
+}
+#calculator h1 span {
+  position: relative;
+  color: #966c3b;
+}
+#calculator h1 span::before {
+  content: "";
+  position: absolute;
+  left: -15%;
+  bottom: -6%;
+  width: 95%;
+  height: 4px;
+  background: #f0c929;
+  border-radius: 3px;
+}
+#calculator h1 span::after {
+  content: "";
+  position: absolute;
+  left: -7%;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: #cdc733;
+  border-radius: 3px;
+}
+#calculator-contain {
+  background: #d2e69c;
+  box-shadow: -10px 12px 0px #2b4f60;
+}
+
+#result {
+  background: #28b5b5;
+  box-shadow: -2px 10px 0px #007580;
+}
+
+#result h2 {
+  font-family: "Russo One", sans-serif;
+  color: #eeebdd;
+}
+
+#btn-contain .btn {
+  margin: 0.3em;
+  outline: none;
+  font-family: "Press Start 2P", cursive;
+  font-size: 2em;
+  font-weight: 800;
+  box-shadow: -2px 10px 0px #28b5b5;
+  color: #eeebdd;
+  background: #4b778d;
+}
+#btn-contain .btn-action {
+  box-shadow: -6px 11px 0px #2b4f60;
+  color: #fbe0c4;
+  background: #8ab6d6;
+}
+#btn-contain .btn-clear {
+  box-shadow: -2px 10px 0px #810000;
+  color: #f8f4e1;
+  background: #e84545;
 }

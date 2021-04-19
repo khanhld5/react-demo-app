@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -28,26 +27,15 @@ function Todo({ ...props }) {
   const handleEditSubmit = (e) => {
     const input = editInput.current;
     e.preventDefault();
-
     if (edit.length) {
       item.title = edit;
       dispatch(handleEditTodo(item));
-      //props.storeTodoList(list, allDone);
     } else dispatch(handleRemove(item.id));
-
     input.blur();
   };
 
-  // const handleDone = (id) => {
-  //   // list[index].done = !list[index].done;
-  //   //const allDone = checkAllDone(list);
-  //   dispatch(handleTodoDone(id));
-  //   //props.storeTodoList(list, allDone);
-  // };
-
   const handleRemove = (id) => {
     dispatch(handleTodoRemove(id));
-    //props.storeTodoList(list, allDone);
   };
 
   //Hover on this component

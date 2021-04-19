@@ -67,26 +67,28 @@ class RandomQuotes extends PureComponent {
     const opacity = this.state.opacity;
     const color = { backgroundColor: this.state.color };
     return (
-      <div className="display_quotes w-1/2 m-auto ">
-        <Quote
-          quote={
-            Object.keys(quote).length
-              ? quote
-              : { quote: "Loading...", author: "" }
-          }
-          color={color}
-          opacity={opacity}
-        ></Quote>
-        <button
-          onClick={this.handleRandomQuote}
-          onAnimationEnd={this.handleAnimationEnd}
-          className={`block rounded px-2 py-1 text-white focus:outline-none hover:opacity-80 ml-auto transition-all duration-300  ${
-            opacity ? "fade" : ""
-          }`}
-          style={color}
-        >
-          Random Quote
-        </button>
+      <div className="container m-auto">
+        <div className="display_quotes lg:w-1/2 md:w-3/4 m-auto">
+          <Quote
+            quote={
+              Object.keys(quote).length
+                ? quote
+                : { quote: "Loading...", author: "" }
+            }
+            color={color}
+            opacity={opacity}
+          />
+          <button
+            onClick={this.handleRandomQuote}
+            onAnimationEnd={this.handleAnimationEnd}
+            className={`block rounded px-2 py-1 text-white focus:outline-none hover:opacity-80 ml-auto transition-all duration-300  ${
+              opacity ? "fade" : ""
+            }`}
+            style={color}
+          >
+            Random Quote
+          </button>
+        </div>
       </div>
     );
   }
