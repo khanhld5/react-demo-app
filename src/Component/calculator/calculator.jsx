@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import ButtonCtn from "./buttonContain";
 import "../Style/individualStyle.css";
 
@@ -6,102 +6,118 @@ export default function Calculator() {
   const [expression, setExpression] = useState([]);
   const [result, setResult] = useState(0);
 
-  const handleAddExpression = (value) => {
-    let exp = [...expression];
-    const expLength = exp.length;
-    let prevChar = "";
-    //if already have result
-    if (exp.some((item) => item === "=")) {
-      if (typeof value === "number") {
-        exp = [value];
-        setExpression(exp);
-      } else if (value === ".") {
-        exp = [0, value];
-        setExpression(exp);
-      } else {
-        exp = [result, value];
-        setExpression(exp);
-      }
-    }
+  //local use
+  const handleRenderExp = useMemo(() => {
+    const exp = [...expression];
 
-    //on first char
-    else if (expLength === 0) {
-      if (typeof value === "number" || value === "+" || value === "-") {
-        exp.push(value);
-        setExpression(exp);
+    for (let i = 0; i < exp.length; i++) {
+      if (exp[i] === "*") {
+        exp[i] = "x";
       }
     }
-    //on second char
-    else if (expLength === 1) {
-      prevChar = exp[expLength - 1];
-      if (typeof prevChar === "number") {
-        exp.push(value);
-        setExpression(exp);
-      } else {
+    return exp.join("");
+  }, [expression]);
+
+  //pass down as props
+  const handleAddExpression = useCallback(
+    (value) => {
+      let exp = [...expression];
+      const expLength = exp.length;
+      let prevChar = "";
+      //if already have result
+      if (exp.some((item) => item === "=")) {
         if (typeof value === "number") {
+          exp = [value];
+          setExpression(exp);
+        } else if (value === ".") {
+          exp = [0, value];
+          setExpression(exp);
+        } else {
+          exp = [result, value];
+          setExpression(exp);
+        }
+      }
+
+      //on first char
+      else if (expLength === 0) {
+        if (typeof value === "number" || value === "+" || value === "-") {
+          exp.push(value);
+          setExpression(exp);
+        }
+      }
+      //on second char
+      else if (expLength === 1) {
+        prevChar = exp[expLength - 1];
+        if (typeof prevChar === "number") {
           exp.push(value);
           setExpression(exp);
         } else {
-          if (value !== prevChar) {
-            exp[exp.length - 1] = value;
+          if (typeof value === "number") {
+            exp.push(value);
             setExpression(exp);
+          } else {
+            if (value !== prevChar) {
+              exp[exp.length - 1] = value;
+              setExpression(exp);
+            }
           }
         }
       }
-    }
-    // on the third char
-    else {
-      prevChar = exp[expLength - 1];
-      // if prev char is a number
-      if (typeof prevChar === "number") {
-        exp.push(value);
-        setExpression(exp);
-      }
-      // if pre char not a number
+      // on the third char
       else {
-        // if value is a number
-        if (typeof value === "number") {
+        prevChar = exp[expLength - 1];
+        // if prev char is a number
+        if (typeof prevChar === "number") {
           exp.push(value);
           setExpression(exp);
         }
-        // if value not a number and prev char diff from  "."
-        if (prevChar !== ".") {
-          switch (prevChar) {
-            case "+":
-              if (value !== "+") {
-                exp[exp.length - 1] = value;
-                setExpression(exp);
-              }
-              break;
-            case "-":
-              if (value !== "-") {
-                exp[exp.length - 1] = value;
-                setExpression(exp);
-              }
-              break;
-            case "*":
-              if (value !== "+") {
-                exp[exp.length - 1] = value;
-                setExpression(exp);
-              }
-              break;
-            case "/":
-              if (value !== "+") {
-                exp[exp.length - 1] = value;
-                setExpression(exp);
-              }
-              break;
-            default:
+        // if pre char not a number
+        else {
+          // if value is a number
+          if (typeof value === "number") {
+            exp.push(value);
+            setExpression(exp);
+          }
+          // if value not a number and prev char diff from  "."
+          if (prevChar !== ".") {
+            switch (prevChar) {
+              case "+":
+                if (value !== "+") {
+                  exp[exp.length - 1] = value;
+                  setExpression(exp);
+                }
+                break;
+              case "-":
+                if (value !== "-") {
+                  exp[exp.length - 1] = value;
+                  setExpression(exp);
+                }
+                break;
+              case "*":
+                if (value !== "+") {
+                  exp[exp.length - 1] = value;
+                  setExpression(exp);
+                }
+                break;
+              case "/":
+                if (value !== "+") {
+                  exp[exp.length - 1] = value;
+                  setExpression(exp);
+                }
+                break;
+              default:
+            }
           }
         }
       }
-    }
-  };
-  const handleRemoveCalc = () => {
+    },
+    [expression, result]
+  );
+  const handleRemoveCalc = useCallback(() => {
     setExpression([]);
     setResult(0);
-  };
-  const handleCalcResult = () => {
+  }, []);
+  const handleCalcResult = useCallback(() => {
     const exp = [...expression];
     const prevChar = exp[exp.length - 1];
     if (exp.some((item) => item === "=")) {
@@ -123,17 +139,8 @@ export default function Calculator() {
         setExpression(exp);
       }
     }
-  };
-  const handleRenderExp = () => {
-    const exp = [...expression];
+  }, [expression]);
 
-    for (let i = 0; i < exp.length; i++) {
-      if (exp[i] === "*") {
-        exp[i] = "x";
-      }
-    }
-    return exp.join("");
-  };
   return (
     <div id="calculator" className="container m-auto">
       <h1 className="text-center mb-12 text-5xl font-bold italic">
@@ -151,7 +158,7 @@ export default function Calculator() {
               }}
               className="flex justify-end items-center text-right p-2 break-all text-4xl"
             >
-              {handleRenderExp()}
+              {handleRenderExp}
             </h2>
           </div>
           <div className="result-contain">
