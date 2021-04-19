@@ -54,6 +54,7 @@
   font-weight: 800;
   box-shadow: -2px 10px 0px #28b5b5;
   transition: all 0.3s;
+  user-select: none;
 }
 #btn-contain .btn-action {
   background: #8ab6d6;
