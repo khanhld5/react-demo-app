@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+//import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import "../Style/individualStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { handleUpdateList } from "../../state/actions/todoListActions";
+import {
+  handleAddTodo,
+  handleAllTodoDone,
+} from "../../state/actions/todoListActions";
 
 function InputField({ ...props }) {
   const [inputTodo, setInputTodo] = useState("");
@@ -13,6 +17,13 @@ function InputField({ ...props }) {
   const list = useSelector((state) => state.todoList.list);
   let allDone = useSelector((state) => state.todoList.allDone);
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const storeAllDone = () => {
+  //     localStorage.setItem("allDone", JSON.stringify(allDone));
+  //   };
+  //   storeAllDone();
+  // }, [allDone]);
 
   const handleInputTodoChange = (e) => {
     const value = e.target.value;
@@ -29,32 +40,14 @@ function InputField({ ...props }) {
   //handle submit
   const handleTodoSubmit = (value) => {
     if (value.length) {
-      let id = 0;
-      if (list.length) id = list[list.length - 1].id + 1;
-      list.push({ id: id, done: false, title: value });
-      const allDone = false;
-      dispatch(handleUpdateList(list, allDone));
-      props.storeTodoList(list, allDone);
+      dispatch(handleAddTodo(value));
       setInputTodo("");
     }
   };
 
-  //handle done
-
+  //handle check all done
   const handleAllDone = () => {
-    if (allDone) {
-      for (let i = 0; i < list.length; i++) {
-        list[i].done = false;
-      }
-      allDone = false;
-    } else {
-      for (let i = 0; i < list.length; i++) {
-        list[i].done = true;
-      }
-      allDone = true;
-    }
-    dispatch(handleUpdateList(list, allDone));
-    props.storeTodoList(list, allDone);
+    if (list.length) dispatch(handleAllTodoDone());
   };
 
   return (

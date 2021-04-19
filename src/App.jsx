@@ -3,7 +3,7 @@ import "./index.css";
 import logo from "./logo.png";
 import RandomQuotes from "./Component/RDQuotesMachine/randomQuotes";
 import CounterContain from "./Component/Counter/counterCtn";
-import TodoList from "./Component/To-Do-App/toDoContain";
+import TodoList from "./Component/To-Do-App/todoContain";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
