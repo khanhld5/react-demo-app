@@ -148,7 +148,7 @@ export default function Calculator() {
       </h1>
       <div
         id="calculator-contain"
-        className="lg:w-5/12 md:w-3/5 m-auto p-6 rounded-3xl"
+        className="md:w-8/12 lg:w-7/12 xl:w-5/12 m-auto p-6 rounded-3xl"
       >
         <section id="result" className="mt-6 mb-5 mx-1 px-2 rounded-3xl">
           <div className="expression">
